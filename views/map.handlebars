@@ -1,0 +1,43 @@
+<div id='app'></div>
+
+<script type='text/babel'>
+    var App = React.createClass({
+        getInitialState: function() {
+            return {
+                text: '',
+                todos: [
+                    {
+                        id:1,
+                        name:'asdf1'
+                    },{
+                        id:2,
+                        name:'asdf2'
+                    },{
+                        id:3,
+                        name:'asdf3'
+                    }
+                ]
+            }
+        },
+        render: function() {
+            return (
+                <TodoList todos={this.state.todos}/>
+            );
+        }
+    });
+
+    var TodoList = React.createClass({
+        render: function() {
+            return (
+                    <ul>
+                        {this.props.todos.map(todo => {
+                            return <li todo={todo} key={todo.id}>{todo.name}</li>
+                            })
+                        }
+                    </ul>
+                );
+        }
+    });
+    
+    ReactDOM.render(<App/>, document.getElementById('app'));
+</script>

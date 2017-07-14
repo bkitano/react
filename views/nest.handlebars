@@ -1,0 +1,41 @@
+<div id='app'></div>
+
+<script type='text/babel'>
+    var App = React.createClass({
+        getInitialState: function() {
+            return {
+                text: "hello world"
+            };
+        },
+        changeText: function(e) {
+            this.setState({text: e.target.value});
+        },
+        render: function() {
+            return (
+                <div className='container'>
+                    <h1> {this.state.text} </h1>
+                    <form>
+                        <input type="text" onChange={this.changeText} value={this.state.text} />
+                    </form>
+                    
+                <br/>
+                <ComponentTwo text={this.state.text}/>
+                
+                </div>
+                );
+        }
+    });
+    
+    var ComponentTwo = React.createClass({
+        render: function() {
+            return (
+                <div>{this.props.text}</div>
+                );
+        }
+    })
+    
+    ReactDOM.render(
+        <App/>, 
+        document.getElementById('app')
+        )
+</script>
