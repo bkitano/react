@@ -1,0 +1,5 @@
+https://www.youtube.com/watch?v=CVigtRUxj2I&list=PLillGF-RfqbbKWfm3Y_RF57dNGsHnkYqO&index=4
+
+1. just copy and paste the cdns and shit carefully. don't be a bitch
+2. make sure the babel is on 5.28.5, not on 6.*
+3. remember that everything is still javascript-esque, so everything is still like a js object

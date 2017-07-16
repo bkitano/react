@@ -1,43 +1,98 @@
 <div id='app'></div>
 
 <script type='text/babel'>
+    
     var App = React.createClass({
         getInitialState: function() {
             return {
-                text: '',
                 todos: [
                     {
-                        id:1,
-                        name:'asdf1'
+                        id: 1,
+                        text: 'ur mom sucks'
                     },{
-                        id:2,
-                        name:'asdf2'
+                        id: 2,
+                        text: 'ur mom sucks'
                     },{
-                        id:3,
-                        name:'asdf3'
+                        id: 3,
+                        text: 'ur mom sucks'
                     }
-                ]
+                    ]
             }
         },
         render: function() {
             return (
-                <TodoList todos={this.state.todos}/>
-            );
+                <div>
+                    <TodoForm onTodoAdd={this.handleTodoAdd}/>
+                    <TodoList deleteTodo={this.todoDelete} todos={this.state.todos} />
+                </div>
+                )
+        },
+        handleTodoAdd: function(text) {
+            var newTodo = {
+                id: this.state.todos.length +1,
+                text: text
+            };
+            this.setState({todos: this.state.todos.concat(newTodo)})
+        },
+        todoDelete: function(todo) {
+            var todos = this.state.todos;
+            for (var i = 0; i < todos.length; i++) {
+                if(todos[i].id == todo.id) {
+                    todos.splice(i,1);
+                }
+            }
+            this.setState({todos: todos});
         }
-    });
-
+    })
+    
     var TodoList = React.createClass({
         render: function() {
             return (
-                    <ul>
+                <div>
+                    <ul className='list-group'>
                         {this.props.todos.map(todo => {
-                            return <li todo={todo} key={todo.id}>{todo.name}</li>
-                            })
-                        }
+                            return (<li className='list-group-item' id={todo.id} todo={todo}>{todo.text}
+                            <a href='#' onClick={this.onDelete.bind(this, todo)}> x</a>
+                            </li>);
+                        })}
                     </ul>
+                </div>
                 );
+        },
+        onDelete: function(todo) {
+            this.props.deleteTodo(todo);
         }
-    });
+    })
+    
+    var TodoForm = React.createClass({
+        render: function() {
+            return(
+                <div className='form-group'>
+                    <form onSubmit={this.onSubmit}>
+                        <label>Todo text</label>
+                        <input type='text' ref='text' onChange={this.onChange} className='form-control'/>
+                    </form>
+                </div>
+                )
+        },
+        onChange: function() {
+            console.log('changing');
+        },
+        onSubmit: function(e) {
+            e.preventDefault();
+            // console.log(this.refs.text.value)
+            var text = this.refs.text.value.trim();
+            
+            if (!text) {
+                alert('please enter a todo');
+                return;
+            }
+            
+            this.props.onTodoAdd(text);
+            this.refs.text.value = '';
+        }
+        
+    })
     
     ReactDOM.render(<App/>, document.getElementById('app'));
 </script>
